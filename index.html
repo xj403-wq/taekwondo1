@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跆拳道反霸凌公益项目 | Taekwondo Anti-Bullying</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif; background:#fbfaf8; color:#2b2b2b; line-height:1.75; font-size:16px; }
+  .container { max-width:1140px; margin:0 auto; padding:0 32px; width:100%; }
+  a { text-decoration:none; color:inherit; }
+  img { max-width:100%; display:block; }
+
+  /* 语言切换 */
+  .lang-switch { position:fixed; top:80px; right:24px; z-index:200; display:flex; gap:4px; background:#fff; border:1px solid #e8e4de; border-radius:40px; padding:4px; box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+  .lang-switch button { border:none; background:none; padding:6px 14px; border-radius:40px; font-size:0.8rem; font-weight:600; cursor:pointer; font-family:inherit; color:#666; transition:0.2s; }
+  .lang-switch button.active { background:#1c2b3a; color:#f4d03f; }
+
+  .navbar { position:sticky; top:0; z-index:100; background:#fff; border-bottom:1px solid #e8e4de; }
+  .navbar .container { display:flex; justify-content:space-between; align-items:center; height:72px; }
+  .logo { font-size:1.05rem; font-weight:600; color:#1c2b3a; display:flex; align-items:center; gap:12px; }
+  .logo .mark { background:#1c2b3a; color:#f4d03f; width:36px; height:36px; border-radius:6px; display:flex; align-items:center; justify-content:center; }
+  .nav-links { display:flex; gap:2px; list-style:none; }
+  .nav-links a { color:#5a5a5a; font-size:0.9rem; font-weight:500; padding:8px 16px; border-radius:6px; transition:0.2s; }
+  .nav-links a:hover { color:#1c2b3a; background:#f5f3ef; }
+  .menu-toggle { display:none; background:none; border:none; color:#1c2b3a; font-size:1.5rem; cursor:pointer; }
+
+  .hero { background:#1c2b3a; color:#f5f3ef; padding:6rem 0 6.5rem; position:relative; overflow:hidden; }
+  .hero::after { content:"反霸凌"; position:absolute; right:-30px; bottom:-40px; font-size:14rem; font-weight:800; color:rgba(255,255,255,0.025); pointer-events:none; white-space:nowrap; }
+  .hero .container { position:relative; z-index:1; }
+  .hero-content { max-width:780px; }
+  .hero-tag { display:inline-block; color:#f4d03f; font-size:0.8rem; font-weight:600; letter-spacing:2px; margin-bottom:2rem; border-bottom:1px solid rgba(244,208,63,0.4); padding-bottom:6px; }
+  .hero h1 { font-size:3rem; font-weight:700; line-height:1.25; margin-bottom:2rem; color:#fff; }
+  .hero h1 .highlight { color:#f4d03f; }
+  .hero p.lead { font-size:1.1rem; color:rgba(245,243,239,0.78); max-width:640px; margin-bottom:3rem; line-height:1.9; }
+  .hero-actions { display:flex; gap:16px; flex-wrap:wrap; }
+  .btn { display:inline-flex; align-items:center; gap:10px; padding:14px 32px; border-radius:4px; font-weight:600; font-size:0.92rem; transition:0.2s; cursor:pointer; border:1px solid transparent; font-family:inherit; }
+  .btn-primary { background:#f4d03f; color:#1c2b3a; }
+  .btn-primary:hover { background:#e0bd2f; }
+  .btn-outline { background:transparent; color:#f5f3ef; border-color:rgba(245,243,239,0.3); }
+  .btn-outline:hover { border-color:#f4d03f; color:#f4d03f; }
+
+  .section { padding:5rem 0; }
+  .section.alt { background:#fff; }
+  .section-header { max-width:760px; margin:0 0 3.5rem; }
+  .section-header.center { margin-left:auto; margin-right:auto; text-align:center; }
+  .section-eyebrow { display:inline-block; color:#8a7f6e; font-weight:600; font-size:0.78rem; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:1rem; }
+  .section-header h2 { font-size:2rem; font-weight:700; color:#1c2b3a; margin-bottom:1rem; }
+  .section-header p { color:#666; font-size:1rem; white-space:pre-line; }
+
+  .intro-content { display:grid; grid-template-columns:1.3fr 1fr; gap:4rem; align-items:start; }
+  @media(max-width:800px){ .intro-content{grid-template-columns:1fr;gap:2.5rem;} }
+  .intro-text { font-size:1rem; color:#3a3a3a; white-space:pre-line; line-height:2; }
+  .intro-highlights { display:grid; gap:1rem; }
+  .intro-highlight { background:#faf8f5; border-radius:4px; padding:1.5rem 1.75rem; border-left:3px solid #1c2b3a; }
+  .intro-highlight h4 { font-size:0.95rem; font-weight:700; color:#1c2b3a; margin-bottom:6px; }
+  .intro-highlight p { color:#666; font-size:0.9rem; white-space:pre-line; }
+
+  .spirit-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:1.25rem; }
+  .spirit-card { background:#fff; border-radius:4px; padding:2rem 1.5rem; border:1px solid #e8e4de; transition:0.25s; }
+  .spirit-card:hover { border-color:#1c2b3a; box-shadow:0 4px 16px rgba(28,43,58,0.08); }
+  .spirit-card .icon { font-size:1.8rem; margin-bottom:1rem; display:block; opacity:0.85; }
+  .spirit-card h3 { font-size:1.05rem; font-weight:700; color:#1c2b3a; margin-bottom:0.6rem; }
+  .spirit-card p { color:#666; font-size:0.88rem; white-space:pre-line; }
+
+  .media-wall-section { background:#f7f4ef; }
+  .media-toolbar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:2rem; }
+  .media-toolbar h2 { font-size:1.75rem; font-weight:700; color:#1c2b3a; }
+  .refresh-btn { background:#fff; color:#1c2b3a; border:1px solid #d5d0c8; padding:9px 20px; border-radius:4px; font-size:0.85rem; cursor:pointer; font-family:inherit; }
+  .media-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.5rem; }
+  .media-card { background:#fff; border-radius:4px; overflow:hidden; border:1px solid #e8e4de; display:flex; flex-direction:column; }
+  .media-preview { width:100%; height:220px; background:#1c2b3a; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
+  .media-preview img, .media-preview video { width:100%; height:100%; object-fit:cover; display:block; }
+  .media-preview video { object-fit:contain; background:#0f1a24; }
+  .media-badge { position:absolute; top:10px; left:10px; background:rgba(28,43,58,0.85); color:#f5f3ef; padding:3px 10px; border-radius:3px; font-size:0.7rem; font-weight:600; }
+  .media-info { padding:1.25rem; flex:1; display:flex; flex-direction:column; gap:6px; }
+  .media-title { font-weight:600; font-size:0.95rem; color:#1c2b3a; line-height:1.5; }
+  .media-meta { display:flex; justify-content:space-between; color:#8a7f6e; font-size:0.78rem; margin-top:auto; padding-top:8px; border-top:1px solid #f0ede8; }
+  .empty-state { text-align:center; padding:3.5rem 2rem; background:#fff; border-radius:4px; border:1px solid #e8e4de; grid-column:1/-1; }
+  .empty-state p { color:#8a7f6e; }
+
+  .cta-banner { background:#1c2b3a; color:#f5f3ef; padding:4rem 0; text-align:center; }
+  .cta-banner h2 { font-size:1.9rem; font-weight:700; margin-bottom:1rem; color:#fff; }
+  .cta-banner p { font-size:1rem; opacity:0.82; margin-bottom:2rem; max-width:600px; margin-left:auto; margin-right:auto; white-space:pre-line; }
+
+  .footer { background:#141e28; color:#9a958c; padding:3.5rem 0 2rem; }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; margin-bottom:2.5rem; }
+  @media(max-width:800px){ .footer-grid{grid-template-columns:1fr;} }
+  .footer-brand .logo { margin-bottom:1rem; color:#f5f3ef; }
+  .footer-brand .logo .mark { background:#f4d03f; color:#1c2b3a; }
+  .footer-brand p { font-size:0.88rem; line-height:1.8; max-width:400px; white-space:pre-line; }
+  .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:2rem; text-align:center; font-size:0.8rem; color:#6b6862; }
+
+  @media(max-width:768px){
+    .nav-links { display:none; position:absolute; top:72px; left:0; right:0; background:#fff; flex-direction:column; padding:1rem; gap:2px; box-shadow:0 8px 24px rgba(0,0,0,0.08); border-bottom:1px solid #e8e4de; }
+    .nav-links.open { display:flex; }
+    .menu-toggle { display:block; }
+    .hero h1 { font-size:2.2rem; }
+    .section-header h2 { font-size:1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-switch">
+  <button id="btnZh" class="active" onclick="setLang('zh')">中文</button>
+  <button id="btnEn" onclick="setLang('en')">EN</button>
+</div>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="#top" class="logo"><span class="mark">跆</span><span data-i18n="nav.logo">跆拳道反霸凌公益项目</span></a>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#intro" data-i18n="nav.intro">项目介绍</a></li>
+      <li><a href="#spirit" data-i18n="nav.spirit">精神内涵</a></li>
+      <li><a href="#media-wall" data-i18n="nav.media">影像资料</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag" data-i18n="hero.tag">公益项目 · 反霸凌倡导</div>
+      <h1 data-i18n="hero.title">以跆拳道精神<br>培育青少年的<span class="highlight">品格与勇气</span></h1>
+      <p class="lead" data-i18n="hero.lead">本项目以跆拳道的礼仪与克己精神为基础，面向青少年与社区开展反霸凌教育。</p>
+      <div class="hero-actions">
+        <a href="#media-wall" class="btn btn-primary" data-i18n="hero.btn1">查看影像资料</a>
+        <a href="#intro" class="btn btn-outline" data-i18n="hero.btn2">项目介绍</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="intro">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow" data-i18n="intro.eyebrow">About the Project</span>
+      <h2 data-i18n="intro.title">项目介绍</h2>
+      <p data-i18n="intro.subtitle">以武术教育为载体，推动青少年反霸凌意识与品格建设</p>
+    </div>
+    <div class="intro-content">
+      <div class="intro-text" data-i18n="intro.text">「跆拳道反霸凌」是一项面向青少年与社区的公益性教育项目。项目以跆拳道的礼仪、忍耐、克己等精神为核心，通过系统的课程与活动，帮助青少年建立自信、学会尊重他人，并掌握面对霸凌时的正确应对方式。</div>
+      <div class="intro-highlights" id="introHighlights"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="spirit">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow" data-i18n="spirit.eyebrow">Taekwondo Spirit</span>
+      <h2 data-i18n="spirit.title">精神内涵</h2>
+      <p data-i18n="spirit.subtitle">跆拳道的五大精神，构成反霸凌教育的品格根基</p>
+    </div>
+    <div class="spirit-grid" id="spiritGrid"></div>
+  </div>
+</section>
+
+<section class="section media-wall-section" id="media-wall">
+  <div class="container">
+    <div class="media-toolbar">
+      <h2 data-i18n="media.title">影像资料</h2>
+      <button class="refresh-btn" onclick="loadMedia()" data-i18n="media.refresh">刷新</button>
+    </div>
+    <div class="media-grid" id="mediaGrid"></div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="container">
+    <h2 data-i18n="cta.title">每一次站起，都是一次成长</h2>
+    <p data-i18n="cta.text">霸凌不会自行消失，但勇气可以通过教育被培养。</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><span class="mark">跆</span><span data-i18n="nav.logo">跆拳道反霸凌公益项目</span></div>
+        <p data-i18n="footer.desc">以礼始，以礼终。以跆拳道精神推动青少年品格教育。</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Taekwondo Anti-Bullying Project</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const i18n = {
+  zh: {
+    'nav.logo': '跆拳道反霸凌公益项目',
+    'nav.intro': '项目介绍',
+    'nav.spirit': '精神内涵',
+    'nav.media': '影像资料',
+    'hero.tag': '公益项目 · 反霸凌倡导',
+    'hero.title': '以跆拳道精神<br>培育青少年的<span class="highlight">品格与勇气</span>',
+    'hero.lead': '本项目以跆拳道的礼仪与克己精神为基础，面向青少年与社区开展反霸凌教育。',
+    'hero.btn1': '查看影像资料',
+    'hero.btn2': '项目介绍',
+    'intro.eyebrow': 'About the Project',
+    'intro.title': '项目介绍',
+    'intro.subtitle': '以武术教育为载体，推动青少年反霸凌意识与品格建设',
+    'intro.text': '「跆拳道反霸凌」是一项面向青少年与社区的公益性教育项目。项目以跆拳道的礼仪、忍耐、克己等精神为核心，通过系统的课程与活动，帮助青少年建立自信、学会尊重他人，并掌握面对霸凌时的正确应对方式。',
+    'spirit.eyebrow': 'Taekwondo Spirit',
+    'spirit.title': '精神内涵',
+    'spirit.subtitle': '跆拳道的五大精神，构成反霸凌教育的品格根基',
+    'media.title': '影像资料',
+    'media.refresh': '刷新',
+    'cta.title': '每一次站起，都是一次成长',
+    'cta.text': '霸凌不会自行消失，但勇气可以通过教育被培养。',
+    'footer.desc': '以礼始，以礼终。以跆拳道精神推动青少年品格教育。'
+  },
+  en: {
+    'nav.logo': 'Taekwondo Anti-Bullying',
+    'nav.intro': 'About',
+    'nav.spirit': 'Spirit',
+    'nav.media': 'Media',
+    'hero.tag': 'Public Project · Anti-Bullying',
+    'hero.title': 'Nurturing <span class="highlight">Character & Courage</span><br>Through Taekwondo',
+    'hero.lead': 'Based on the courtesy and self-discipline of Taekwondo, this project delivers anti-bullying education to youth and communities.',
+    'hero.btn1': 'View Media',
+    'hero.btn2': 'About the Project',
+    'intro.eyebrow': 'About the Project',
+    'intro.title': 'About the Project',
+    'intro.subtitle': 'Using martial arts education to build anti-bullying awareness and character',
+    'intro.text': '"Taekwondo Anti-Bullying" is a public education project for youth and communities. Centered on the Taekwondo spirit of courtesy, patience, and self-discipline, it helps young people build confidence, learn respect, and respond correctly to bullying.',
+    'spirit.eyebrow': 'Taekwondo Spirit',
+    'spirit.title': 'Spirit',
+    'spirit.subtitle': 'The five tenets of Taekwondo form the foundation of anti-bullying education',
+    'media.title': 'Media',
+    'media.refresh': 'Refresh',
+    'cta.title': 'Every Time You Stand Up, You Grow',
+    'cta.text': 'Bullying won\'t disappear on its own, but courage can be cultivated through education.',
+    'footer.desc': 'Begin with courtesy, end with courtesy. Promoting youth character education through Taekwondo.'
+  }
+};
+
+let currentLang = 'zh';
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btnZh').classList.toggle('active', lang === 'zh');
+  document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+  });
+  renderSpirits();
+  renderIntroHighlights();
+  loadMedia();
+}
+
+const spiritsData = {
+  zh: [
+    { icon:'🙇', title:'礼仪', desc:'尊重他人、谦逊有礼，是人际相处的基本准则。' },
+    { icon:'⚖️', title:'廉耻', desc:'明辨是非、知所进退，不做有损他人之事。' },
+    { icon:'🌱', title:'忍耐', desc:'面对困难与压力时，保持坚韧与自我调节能力。' },
+    { icon:'🧘', title:'克己', desc:'约束情绪与行为，以理性而非冲动回应冲突。' },
+    { icon:'🏔️', title:'百折不屈', desc:'经历挫折仍能坚持，不因困难而轻易放弃。' }
+  ],
+  en: [
+    { icon:'🙇', title:'Courtesy', desc:'Respect others and be humble—the basic principle of human interaction.' },
+    { icon:'⚖️', title:'Integrity', desc:'Distinguish right from wrong and avoid harming others.' },
+    { icon:'🌱', title:'Perseverance', desc:'Maintain resilience and self-regulation under difficulty and pressure.' },
+    { icon:'🧘', title:'Self-Control', desc:'Restrain emotions and behavior, responding rationally rather than impulsively.' },
+    { icon:'🏔️', title:'Indomitable Spirit', desc:'Persist through setbacks and never give up easily.' }
+  ]
+};
+
+const introHighlightsData = {
+  zh: [
+    { title:'公益属性', desc:'所有活动向公众免费开放，不设任何收费环节。' },
+    { title:'专业实施', desc:'由跆拳道教练与心理辅导志愿者共同设计与执行。' },
+    { title:'青少年导向', desc:'面向 6-18 岁青少年，聚焦自信建立与反霸凌意识培养。' }
+  ],
+  en: [
+    { title:'Non-Profit', desc:'All activities are free and open to the public.' },
+    { title:'Professional Team', desc:'Designed and delivered by Taekwondo coaches and counseling volunteers.' },
+    { title:'Youth-Oriented', desc:'For ages 6-18, focusing on confidence building and anti-bullying awareness.' }
+  ]
+};
+
+function renderSpirits() {
+  const container = document.getElementById('spiritGrid');
+  if (!container) return;
+  const data = spiritsData[currentLang] || spiritsData.zh;
+  container.innerHTML = data.map(s => 
+    `<div class="spirit-card"><span class="icon">${s.icon}</span><h3>${s.title}</h3><p>${s.desc}</p></div>`
+  ).join('');
+}
+
+function renderIntroHighlights() {
+  const container = document.getElementById('introHighlights');
+  if (!container) return;
+  const data = introHighlightsData[currentLang] || introHighlightsData.zh;
+  container.innerHTML = data.map(h => 
+    `<div class="intro-highlight"><h4>${h.title}</h4><p>${h.desc}</p></div>`
+  ).join('');
+}
+
+// 对接 Vercel API 获取媒体列表
+async function loadMedia() {
+  const grid = document.getElementById('mediaGrid');
+  grid.innerHTML = `<div class="empty-state"><p>${currentLang === 'zh' ? '加载中...' : 'Loading...'}</p></div>`;
+  try {
+    const res = await fetch('/api/media');
+    const mediaList = await res.json();
+    if (!mediaList.length) {
+      grid.innerHTML = `<div class="empty-state"><p>${currentLang === 'zh' ? '暂无影像资料' : 'No media yet'}</p></div>`;
+      return;
+    }
+    grid.innerHTML = mediaList.map(item => {
+      const isVideo = item.type && item.type.startsWith('video/');
+      const title = item.title || (isVideo ? (currentLang === 'zh' ? '项目影像' : 'Project Video') : (currentLang === 'zh' ? '项目图片' : 'Project Image'));
+      const preview = isVideo
+        ? `<video controls muted preload="metadata" playsinline><source src="${item.url}" type="${item.type}"></video>`
+        : `<img src="${item.url}" alt="${title}" loading="lazy">`;
+      return `<div class="media-card">
+        <div class="media-preview">${preview}<div class="media-badge">${isVideo ? '视频 / Video' : '图片 / Image'}</div></div>
+        <div class="media-info"><div class="media-title">${title}</div><div class="media-meta"><span>${item.uploadTime || ''}</span></div></div>
+      </div>`;
+    }).join('');
+  } catch (err) {
+    grid.innerHTML = `<div class="empty-state"><p>${currentLang === 'zh' ? '加载失败' : 'Failed to load'}</p></div>`;
+  }
+}
+
+document.getElementById('menuToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+setLang('zh');
+</script>
+</body>
+</html>
